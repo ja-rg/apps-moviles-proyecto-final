@@ -1,34 +1,41 @@
 import { useNoteContext } from '@/context/Note';
-import { router, useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
+import { router } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
 
 export default function NoteEditorScreen() {
-    const { notes, addNote, removeNote } = useNoteContext();
-    const { id } = useLocalSearchParams<{ id: string }>(); // Suponiendo que id se pasa al editar una nota existente
+    const { currentNote, addNote, removeNote, setCurrentNote } = useNoteContext();
+    const [title, setTitle] = useState(currentNote ? currentNote.title : 'Nueva Nota');
+    const [content, setContent] = useState(currentNote ? currentNote.content : '');
 
-    // Encontrar la nota si estamos editando, de lo contrario, preparar para una nueva nota
-    const existingNote = notes.find((note) => note.id === id);
-    const [title, setTitle] = useState(existingNote ? existingNote.title : 'Nueva Nota');
-    const [content, setContent] = useState(existingNote ? existingNote.content : '');
+    useEffect(() => {
+        return () => {
+            // Clear currentNote when leaving the screen
+            setCurrentNote(null);
+        };
+    }, []);
 
     const handleSave = () => {
-        const noteId = existingNote ? existingNote.id : Date.now().toString();
+        const noteId = currentNote ? currentNote.id : Date.now().toString();
         const newNote = {
             id: noteId,
             title,
             content,
-            creationDate: existingNote ? existingNote.creationDate : new Date(),
+            creationDate: currentNote ? currentNote.creationDate : new Date(),
         };
 
-        if (existingNote) {
-            // Eliminar la nota antigua y reemplazarla por la actualizada
+        if (currentNote) {
+            // Remove the old note and replace with the updated one
             removeNote(noteId);
         }
 
-        // Agregar la nueva o actualizada nota
+        // Add the new or updated note
         addNote(newNote);
 
+        router.replace('/');
+    };
+
+    const handleCancel = () => {
         router.replace('/');
     };
 
@@ -47,9 +54,14 @@ export default function NoteEditorScreen() {
                 style={styles.textInput}
                 multiline
             />
-            <Pressable onPress={handleSave} style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Guardar</Text>
-            </Pressable>
+            <View style={styles.buttonContainer}>
+                <Pressable onPress={handleSave} style={styles.saveButton}>
+                    <Text style={styles.saveButtonText}>Guardar</Text>
+                </Pressable>
+                <Pressable onPress={handleCancel} style={styles.cancelButton}>
+                    <Text style={styles.cancelButtonText}>Cancelar</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -58,13 +70,27 @@ const styles = StyleSheet.create({
     container: { flex: 1, padding: 16 },
     titleInput: { fontSize: 20, fontWeight: 'bold', marginBottom: 16, borderBottomWidth: 1, borderBottomColor: '#ccc' },
     textInput: { flex: 1, fontSize: 18, textAlignVertical: 'top' },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 16,
+    },
     saveButton: {
         backgroundColor: '#007AFF',
         padding: 16,
         borderRadius: 8,
         alignItems: 'center',
-        margin: 16,
+        flex: 1,
+        marginRight: 8,
     },
-
+    cancelButton: {
+        backgroundColor: '#FF3B30',
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        flex: 1,
+        marginLeft: 8,
+    },
     saveButtonText: { color: 'white', fontSize: 18 },
+    cancelButtonText: { color: 'white', fontSize: 18 },
 });

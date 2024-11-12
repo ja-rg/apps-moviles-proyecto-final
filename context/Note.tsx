@@ -9,14 +9,17 @@ interface Note {
 
 interface NoteContextType {
     notes: Note[];
+    currentNote: Note | null;
     addNote: (note: Note) => void;
     removeNote: (id: string) => void;
+    setCurrentNote: (note: Note | null) => void;
 }
 
 const NoteContext = createContext<NoteContextType | undefined>(undefined);
 
 export const NoteProvider = ({ children }: { children: ReactNode }) => {
     const [notes, setNotes] = useState<Note[]>([]);
+    const [currentNote, setCurrentNote] = useState<Note | null>(null);
 
     const addNote = (note: Note) => {
         setNotes([...notes, note]);
@@ -27,7 +30,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <NoteContext.Provider value={{ notes, addNote, removeNote }}>
+        <NoteContext.Provider value={{ notes, currentNote, addNote, removeNote, setCurrentNote }}>
             {children}
         </NoteContext.Provider>
     );
