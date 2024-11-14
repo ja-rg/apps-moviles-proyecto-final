@@ -91,7 +91,10 @@ export default function NoteListScreen() {
           />
         </View>
 
-        {/* Lista de notas con funcionalidad de swipe */}
+        {/* Mostrar mensaje de respaldo si no hay notas */}
+        {filteredNotes.length === 0 ? (
+          <Text style={styles.emptyMessage}>No hay notas para mostrar.</Text>
+        ) : (
         <FlatList
           data={filteredNotes}
           keyExtractor={(note) => note.id}
@@ -122,6 +125,8 @@ export default function NoteListScreen() {
             </Swipeable>
           )}
         />
+        )}
+        
         <Pressable onPress={addNewNote} style={styles.addNoteButton}>
           <Ionicons name="add-circle-outline" size={24} color="white" />
         </Pressable>
@@ -163,6 +168,18 @@ const styles = StyleSheet.create({
   noteText: { fontSize: 16, fontWeight: "bold" },
   noteContent: { fontSize: 14, color: "#666" },
   noteDate: { fontSize: 12, color: "#999" },
+  emptyMessage: {
+    textAlign: "center",
+    color: "#666",
+    fontSize: 16,
+    marginTop: 20,
+    fontWeight: "bold",
+    flex: 1,
+
+    alignItems: "center",
+    justifyContent: "center",
+    
+  },
   addNoteButton: {
     flexDirection: "row",
     backgroundColor: "#007AFF",
