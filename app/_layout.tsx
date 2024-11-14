@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <NoteProvider>
       <Stack>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="Notas" />
       </Stack>
     </NoteProvider>
   );

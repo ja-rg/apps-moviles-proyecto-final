@@ -4,6 +4,8 @@ import { router } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
 
+import { printAsync } from 'expo-print';
+
 export default function NoteEditorScreen() {
     const { current_note, addNote, setCurrentNote } = useNoteContext();
     const [title, setTitle] = useState(current_note ? current_note.title : 'Nueva Nota');
@@ -29,6 +31,29 @@ export default function NoteEditorScreen() {
         router.back();
     };
 
+    const handlePrint = async () => {
+        if (!current_note) return;
+
+        const html = `
+            <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        h1 { color: #333; }
+                        p { color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${current_note.title}</h1>
+                    <p>${current_note.content}</p>
+                </body>
+            </html>
+        `;
+
+        const result = await printAsync({ html });
+        console.log(result);
+    }
+
     return (
         <View style={styles.container}>
             <TextInput
@@ -44,6 +69,9 @@ export default function NoteEditorScreen() {
                 style={styles.textInput}
                 multiline
             />
+            <Pressable onPress={handlePrint} style={styles.printButton}>
+                <Ionicons name="print-outline" size={20} color="white" />
+            </Pressable>
             <Pressable onPress={handleSave} style={styles.saveButton}>
                 <Ionicons name="save-outline" size={20} color="white" />
             </Pressable>
@@ -52,17 +80,33 @@ export default function NoteEditorScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16 },
-    titleInput: { fontSize: 20, fontWeight: 'bold', marginBottom: 16, borderBottomWidth: 1, borderBottomColor: '#ccc' },
-    textInput: { flex: 1, fontSize: 18, textAlignVertical: 'top' },
-    saveButton: {
-        flexDirection: 'row',
-        backgroundColor: '#007AFF',
-        padding: 16,
-        borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 16,
-    },
-    saveButtonText: { color: 'white', fontSize: 18, marginLeft: 8 },
+  container: { flex: 1, padding: 16 },
+  titleInput: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  textInput: { flex: 1, fontSize: 18, textAlignVertical: "top" },
+  saveButton: {
+    flexDirection: "row",
+    backgroundColor: "#007AFF",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 8,
+  },
+  printButton: {
+    flexDirection: "row",
+    // grey pastel
+    backgroundColor: "#c0c0c0",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 8,
+  },
+  saveButtonText: { color: "white", fontSize: 18, marginLeft: 8 },
 });

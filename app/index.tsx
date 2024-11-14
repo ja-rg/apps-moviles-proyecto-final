@@ -54,12 +54,13 @@ export default function NoteListScreen() {
     setNotes([...notes]);
   };
 
-  const filteredNotes: Note[] = notes.filter(
-    (note) =>
-      note.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchText.toLowerCase())
-  );
-
+  const filteredNotes: Note[] = notes
+    .filter(
+      (note) =>
+        note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        note.content.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .sort((a, b) => (a.favorite === b.favorite ? 0 : a.favorite ? -1 : 1));
   const renderRightActions = (id: string) => (
     <Pressable onPress={() => deleteNote(id)} style={styles.actionButton}>
       <Ionicons name="trash-outline" size={24} color="white" />
