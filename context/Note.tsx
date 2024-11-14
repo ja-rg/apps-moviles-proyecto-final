@@ -5,18 +5,23 @@ interface Note {
     title: string;
     content: string;
     creationDate: Date;
+    favorite: boolean;
 }
 
 interface NoteContextType {
     notes: Note[];
     addNote: (note: Note) => void;
     removeNote: (id: string) => void;
+    current_note: Note | null;
+    setCurrentNote: (note: Note | null) => void;
+    setNotes: (notes: Note[]) => void;
 }
 
 const NoteContext = createContext<NoteContextType | undefined>(undefined);
 
 export const NoteProvider = ({ children }: { children: ReactNode }) => {
     const [notes, setNotes] = useState<Note[]>([]);
+    const [current_note, setCurrentNote] = useState<Note | null>(null);
 
     const addNote = (note: Note) => {
         setNotes([...notes, note]);
@@ -27,7 +32,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <NoteContext.Provider value={{ notes, addNote, removeNote }}>
+        <NoteContext.Provider value={{ notes, addNote, removeNote, current_note, setCurrentNote, setNotes }}>
             {children}
         </NoteContext.Provider>
     );
