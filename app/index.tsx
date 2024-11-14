@@ -118,7 +118,7 @@ export default function NoteListScreen() {
                       : item.content}
                   </Text>
                   <Text style={styles.noteDate}>
-                    {new Date(item.creationDate).toLocaleDateString()}
+                    {new Date(item.creationDate).toLocaleString()}
                   </Text>
                 </View>
               </Pressable>
