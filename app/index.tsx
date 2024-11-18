@@ -22,6 +22,7 @@ interface Note {
   content: string;
   creationDate: Date;
   favorite: boolean;
+  style?: "bold" | "italic" | "strikethrough";
 }
 
 export default function NoteListScreen() {
@@ -113,7 +114,16 @@ export default function NoteListScreen() {
                   />
                   <View style={styles.noteContentContainer}>
                     <Text style={styles.noteText}>{item.title}</Text>
-                    <Text style={styles.noteContent}>
+                    <Text
+                      style={[
+                        styles.noteContent,
+                        item.style === "bold" && { fontWeight: "bold" },
+                        item.style === "italic" && { fontStyle: "italic" },
+                        item.style === "strikethrough" && {
+                          textDecorationLine: "line-through",
+                        },
+                      ]}
+                    >
                       {item.content.length > MAX_WIDTH
                         ? `${item.content.slice(0, MAX_WIDTH)}...`
                         : item.content}

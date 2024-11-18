@@ -15,10 +15,18 @@ export default function NoteEditorScreen() {
     current_note ? current_note.content : ""
   );
 
+  const [style, setStyle] = useState<
+    "bold" | "italic" | "strikethrough" | null
+  >(current_note ? current_note.style : null);
+
   useEffect(() => {
     setTitle(current_note ? current_note.title : "Nueva Nota");
     setContent(current_note ? current_note.content : "");
   }, [current_note]);
+
+  const toggleStyle = (selectedStyle: "bold" | "italic" | "strikethrough") => {
+    setStyle(style === selectedStyle ? null : selectedStyle);
+  };
 
   const handleSave = () => {
     const noteId = current_note ? current_note.id : Date.now().toString();
@@ -28,6 +36,7 @@ export default function NoteEditorScreen() {
       content,
       creationDate: current_note ? current_note.creationDate : new Date(),
       favorite: current_note ? current_note.favorite : false,
+      style,
     };
 
     addNote(newNote);
@@ -70,9 +79,34 @@ export default function NoteEditorScreen() {
         value={content}
         onChangeText={setContent}
         placeholder="Escribe tu nota aquí"
-        style={styles.textInput}
+        style={[
+          styles.textInput,
+          style === "bold" && { fontWeight: "bold" },
+          style === "italic" && { fontStyle: "italic" },
+          style === "strikethrough" && { textDecorationLine: "line-through" },
+        ]}
         multiline
       />
+      <View style={styles.styleButtons}>
+        <Pressable
+          onPress={() => toggleStyle("bold")}
+          style={styles.styleButton}
+        >
+          <Text style={{ fontWeight: "bold" }}>B</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => toggleStyle("italic")}
+          style={styles.styleButton}
+        >
+          <Text style={{ fontStyle: "italic" }}>I</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => toggleStyle("strikethrough")}
+          style={styles.styleButton}
+        >
+          <Text style={{ textDecorationLine: "line-through" }}>S</Text>
+        </Pressable>
+      </View>
       <Pressable onPress={handlePrint} style={styles.printButton}>
         <Ionicons name="print-outline" size={20} color="white" />
       </Pressable>
@@ -110,6 +144,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 8,
+  },
+  styleButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 8,
+  },
+  styleButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
   saveButtonText: { color: "white", fontSize: 18, marginLeft: 8 },
 });
