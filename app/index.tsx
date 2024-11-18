@@ -80,7 +80,6 @@ export default function NoteListScreen() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
-        {/* Campo de búsqueda */}
         <View style={styles.searchContainer}>
           <Ionicons name="search-outline" size={20} color="#666" />
           <TextInput
@@ -91,42 +90,44 @@ export default function NoteListScreen() {
           />
         </View>
 
-        {/* Mostrar mensaje de respaldo si no hay notas */}
         {filteredNotes.length === 0 ? (
           <Text style={styles.emptyMessage}>No hay notas para mostrar.</Text>
         ) : (
-        <FlatList
-          data={filteredNotes}
-          keyExtractor={(note) => note.id}
-          renderItem={({ item }: { item: Note }) => (
-            <Swipeable
-              renderLeftActions={() => renderLeftActions(item)}
-              renderRightActions={() => renderRightActions(item.id)}
-            >
-              <Pressable onPress={() => editNote(item)} style={styles.noteItem}>
-                <Ionicons
-                  name={item.favorite ? "star" : "star-outline"}
-                  size={20}
-                  color={item.favorite ? "#FFD700" : "#666"}
-                  style={styles.favoriteIcon}
-                />
-                <View style={styles.noteContentContainer}>
-                  <Text style={styles.noteText}>{item.title}</Text>
-                  <Text style={styles.noteContent}>
-                    {item.content.length > MAX_WIDTH
-                      ? `${item.content.slice(0, MAX_WIDTH)}...`
-                      : item.content}
-                  </Text>
-                  <Text style={styles.noteDate}>
-                    {new Date(item.creationDate).toLocaleString()}
-                  </Text>
-                </View>
-              </Pressable>
-            </Swipeable>
-          )}
-        />
+          <FlatList
+            data={filteredNotes}
+            keyExtractor={(note) => note.id}
+            renderItem={({ item }: { item: Note }) => (
+              <Swipeable
+                renderLeftActions={() => renderLeftActions(item)}
+                renderRightActions={() => renderRightActions(item.id)}
+              >
+                <Pressable
+                  onPress={() => editNote(item)}
+                  style={styles.noteItem}
+                >
+                  <Ionicons
+                    name={item.favorite ? "star" : "star-outline"}
+                    size={20}
+                    color={item.favorite ? "#FFD700" : "#666"}
+                    style={styles.favoriteIcon}
+                  />
+                  <View style={styles.noteContentContainer}>
+                    <Text style={styles.noteText}>{item.title}</Text>
+                    <Text style={styles.noteContent}>
+                      {item.content.length > MAX_WIDTH
+                        ? `${item.content.slice(0, MAX_WIDTH)}...`
+                        : item.content}
+                    </Text>
+                    <Text style={styles.noteDate}>
+                      {new Date(item.creationDate).toLocaleString()}
+                    </Text>
+                  </View>
+                </Pressable>
+              </Swipeable>
+            )}
+          />
         )}
-        
+
         <Pressable onPress={addNewNote} style={styles.addNoteButton}>
           <Ionicons name="add-circle-outline" size={24} color="white" />
         </Pressable>
@@ -178,7 +179,6 @@ const styles = StyleSheet.create({
 
     alignItems: "center",
     justifyContent: "center",
-    
   },
   addNoteButton: {
     flexDirection: "row",
