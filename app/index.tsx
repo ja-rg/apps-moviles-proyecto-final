@@ -147,63 +147,86 @@ export default function NoteListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, backgroundColor: "#f8f9fa" }, // Fondo blanco/gris claro
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ffffff",
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 8,
     marginBottom: 16,
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
   searchInput: {
     flex: 1,
     marginLeft: 8,
     fontSize: 16,
+    color: "#000",
+    fontWeight: "bold",
   },
   noteItem: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    backgroundColor: "white",
+    borderRadius: 8,
+    marginVertical: 8,
+    backgroundColor: "#ffdd57", // Amarillo vibrante
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
   favoriteIcon: {
     marginRight: 8,
+    color: "#e63946", // Rojo vibrante para favoritos
   },
   noteContentContainer: {
     flex: 1,
   },
-  noteText: { fontSize: 16, fontWeight: "bold" },
-  noteContent: { fontSize: 14, color: "#666" },
-  noteDate: { fontSize: 12, color: "#999" },
+  noteText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  noteContent: {
+    fontSize: 14,
+    color: "#212529",
+  },
+  noteDate: {
+    fontSize: 12,
+    color: "#495057",
+  },
   emptyMessage: {
     textAlign: "center",
-    color: "#666",
+    color: "#000",
     fontSize: 16,
     marginTop: 20,
     fontWeight: "bold",
-    flex: 1,
-
-    alignItems: "center",
-    justifyContent: "center",
   },
   addNoteButton: {
     flexDirection: "row",
-    backgroundColor: "#007AFF",
+    backgroundColor: "#51cf66", // Verde vibrante
     padding: 16,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     margin: 16,
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
   actionButton: {
     justifyContent: "center",
     alignItems: "center",
     width: 80,
-    backgroundColor: "#007AFF",
+    backgroundColor: "#74c0fc", // Azul vibrante
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
-  addNoteButtonText: { color: "white", fontSize: 16, marginLeft: 8 },
+  addNoteButtonText: { color: "#000", fontSize: 16, fontWeight: "bold" },
 });
+
+
+
+
+

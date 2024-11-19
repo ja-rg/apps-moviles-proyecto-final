@@ -118,32 +118,50 @@ export default function NoteEditorScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, backgroundColor: "#f5f5f5" }, // Fondo gris claro
   titleInput: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: "#ffdd57", // Amarillo vibrante
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
+    color: "#000", // Texto negro
   },
-  textInput: { flex: 1, fontSize: 18, textAlignVertical: "top" },
+  textInput: {
+    flex: 1,
+    fontSize: 18,
+    textAlignVertical: "top",
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: "#ffdd57", // Amarillo vibrante
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
+    color: "#000", // Texto negro
+  },
   saveButton: {
     flexDirection: "row",
-    backgroundColor: "#007AFF",
+    backgroundColor: "#51cf66", // Verde brillante
     padding: 16,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 8,
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
   printButton: {
     flexDirection: "row",
-    backgroundColor: "#c0c0c0",
+    backgroundColor: "#74c0fc", // Azul vibrante
     padding: 16,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 8,
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
   },
   styleButtons: {
     flexDirection: "row",
@@ -152,11 +170,22 @@ const styles = StyleSheet.create({
   },
   styleButton: {
     padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 4,
+    backgroundColor: "#ff6b6b", // Rojo vibrante
+    borderWidth: 2,
+    borderColor: "#000", // Contorno negro
     alignItems: "center",
     justifyContent: "center",
+    color: "#000",
   },
-  saveButtonText: { color: "white", fontSize: 18, marginLeft: 8 },
+  saveButtonText: {
+    color: "#000", // Texto negro
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 8,
+  },
 });
+
+
+
+
